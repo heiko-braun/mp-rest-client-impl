@@ -31,18 +31,22 @@
   <packaging>jar</packaging>
 
   <dependencies>
+
+    <!-- Client implementation-->
     <dependency>
       <groupId>org.wildfly.swarm.microprofile.restclient</groupId>
       <artifactId>rest-client-impl</artifactId>
       <version>${project.version}</version>
     </dependency>
 
+    <!-- TCK tests -->
     <dependency>
       <groupId>org.eclipse.microprofile.rest.client</groupId>
       <artifactId>microprofile-rest-client-tck</artifactId>
       <scope>test</scope>
     </dependency>
 
+    <!-- TCK Support  -->
     <dependency>
       <groupId>org.testng</groupId>
       <artifactId>testng</artifactId>
@@ -56,6 +60,30 @@
       <scope>test</scope>
     </dependency>
 
+    <dependency>
+      <groupId>org.jboss.arquillian.testng</groupId>
+      <artifactId>arquillian-testng-container</artifactId>
+      <scope>test</scope>
+    </dependency>
+
+    <dependency>
+      <groupId>org.jboss.weld.se</groupId>
+      <artifactId>weld-se-core</artifactId>
+      <version>2.4.5.Final</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.jboss.arquillian.container</groupId>
+      <artifactId>arquillian-weld-embedded</artifactId>
+      <version>2.0.0.Beta5</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>javax.json</groupId>
+      <artifactId>javax.json-api</artifactId>
+      <version>1.0</version>
+      <scope>test</scope>
+    </dependency>
   </dependencies>
 
   <build>

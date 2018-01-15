@@ -39,52 +39,52 @@ class RestEasyClientBuilder implements RestClientBuilder {
 
     @Override
     public Configuration getConfiguration() {
-        return null;
+        return this.builderDelegate.getConfiguration();
     }
 
     @Override
     public RestClientBuilder property(String s, Object o) {
-        return null;
+        return this;
     }
 
     @Override
     public RestClientBuilder register(Class<?> aClass) {
-        return null;
+        return this;
     }
 
     @Override
     public RestClientBuilder register(Class<?> aClass, int i) {
-        return null;
+        return this;
     }
 
     @Override
     public RestClientBuilder register(Class<?> aClass, Class<?>[] classes) {
-        return null;
+        return this;
     }
 
     @Override
     public RestClientBuilder register(Class<?> aClass, Map<Class<?>, Integer> map) {
-        return null;
+        return this;
     }
 
     @Override
     public RestClientBuilder register(Object o) {
-        return null;
+        return this;
     }
 
     @Override
     public RestClientBuilder register(Object o, int i) {
-        return null;
+        return this;
     }
 
     @Override
     public RestClientBuilder register(Object o, Class<?>[] classes) {
-        return null;
+        return this;
     }
 
     @Override
     public RestClientBuilder register(Object o, Map<Class<?>, Integer> map) {
-        return null;
+        return this;
     }
 
     private final ResteasyClientBuilder builderDelegate;
