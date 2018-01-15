@@ -18,13 +18,13 @@
   <modelVersion>4.0.0</modelVersion>
 
   <parent>
-    <groupId>org.wildfly.swarm.microprofile</groupId>
+    <groupId>org.wildfly.swarm.microprofile.restclient</groupId>
     <artifactId>rest-client-parent</artifactId>
     <relativePath>../</relativePath>
     <version>1.0.0-SNAPSHOT</version>
   </parent>
 
-  <groupId>org.wildfly.swarm.microprofile</groupId>
+  <groupId>org.wildfly.swarm.microprofile.restclient</groupId>
   <artifactId>rest-client-impl</artifactId>
   <name>MicroProfile Rest Client Impl</name>
   <version>1.0.0-SNAPSHOT</version>

@@ -18,30 +18,77 @@
   <modelVersion>4.0.0</modelVersion>
 
   <parent>
-    <groupId>org.wildfly.swarm.microprofile</groupId>
+    <groupId>org.wildfly.swarm.microprofile.restclient</groupId>
     <artifactId>rest-client-parent</artifactId>
     <relativePath>../</relativePath>
     <version>1.0.0-SNAPSHOT</version>
   </parent>
 
-  <groupId>org.wildfly.swarm.microprofile</groupId>
+  <groupId>org.wildfly.swarm.microprofile.restclient</groupId>
   <artifactId>rest-client-tck</artifactId>
   <name>MicroProfile Rest Client TCK</name>
   <version>1.0.0-SNAPSHOT</version>
   <packaging>jar</packaging>
 
-    <dependencies>
-      <!-- core library -->
-      <dependency>
-        <groupId>org.jboss.resteasy</groupId>
-        <artifactId>resteasy-jaxrs</artifactId>
-      </dependency>
-      <dependency>
-        <groupId>org.jboss.resteasy</groupId>
-        <artifactId>resteasy-client</artifactId>
-      </dependency>
+  <dependencies>
+    <dependency>
+      <groupId>org.wildfly.swarm.microprofile.restclient</groupId>
+      <artifactId>rest-client-impl</artifactId>
+      <version>${project.version}</version>
+    </dependency>
 
-    </dependencies>
+    <dependency>
+      <groupId>org.eclipse.microprofile.rest.client</groupId>
+      <artifactId>microprofile-rest-client-tck</artifactId>
+      <scope>test</scope>
+    </dependency>
 
+    <dependency>
+      <groupId>org.testng</groupId>
+      <artifactId>testng</artifactId>
+      <version>6.9.9</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>com.github.tomakehurst</groupId>
+      <artifactId>wiremock</artifactId>
+      <version>2.10.1</version>
+      <scope>test</scope>
+    </dependency>
 
+  </dependencies>
+
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>uk.co.deliverymind</groupId>
+        <artifactId>wiremock-maven-plugin</artifactId>
+        <version>2.7.0</version>
+        <executions>
+          <execution>
+            <phase>generate-test-sources</phase>
+            <goals>
+              <goal>run</goal>
+            </goals>
+            <configuration>
+              <dir>target/classes</dir>
+              <params>--port=8765 --verbose</params>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-surefire-plugin</artifactId>
+        <version>2.19.1</version>
+        <configuration>
+          <suiteXmlFiles>
+            <suiteXmlFile>src/test/tck-suite.xml</suiteXmlFile>
+          </suiteXmlFiles>
+        </configuration>
+      </plugin>
+
+    </plugins>
+  </build>
 </project>
