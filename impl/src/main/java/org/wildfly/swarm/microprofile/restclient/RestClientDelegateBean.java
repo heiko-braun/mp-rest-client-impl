@@ -1,5 +1,7 @@
 package org.wildfly.swarm.microprofile.restclient;
 
+import org.eclipse.microprofile.config.Config;
+import org.eclipse.microprofile.config.ConfigProvider;
 import org.eclipse.microprofile.rest.client.inject.RestClient;
 
 import javax.enterprise.context.Dependent;
@@ -23,12 +25,12 @@ public class RestClientDelegateBean implements Bean<Object>, PassivationCapable{
     private final Class<?> clientInterface;
     private final Class<? extends Annotation> scope;
     private final BeanManager beanManager;
-    //private final Config config;
+    private final Config config;
 
     RestClientDelegateBean(Class<?> clientInterface, BeanManager beanManager) {
         this.clientInterface = clientInterface;
         this.beanManager = beanManager;
-        //this.config = ConfigProvider.getConfig();
+        this.config = ConfigProvider.getConfig();
         this.scope = this.readScope();
     }
     @Override
@@ -98,15 +100,14 @@ public class RestClientDelegateBean implements Bean<Object>, PassivationCapable{
     }
 
     private String getBaseUrl() {
-        /*String property = String.format(REST_URL_FORMAT, clientInterface.getName());
-        return config.getValue(property, String.class);*/
-        return "http://foobar";
+        String property = String.format(REST_URL_FORMAT, clientInterface.getName());
+        return config.getValue(property, String.class);
     }
 
     private Class<? extends Annotation> readScope() {
         // first check to see if the value is set
         String property = String.format(REST_SCOPE_FORMAT, clientInterface.getName());
-        String configuredScope = null;//config.getOptionalValue(property, String.class).orElse(null);
+        String configuredScope = config.getOptionalValue(property, String.class).orElse(null);
         if(configuredScope != null) {
             try {
                 return (Class<? extends Annotation>)Class.forName(configuredScope);

@@ -39,6 +39,8 @@
       <version>${project.version}</version>
     </dependency>
 
+
+
     <!-- TCK tests -->
     <dependency>
       <groupId>org.eclipse.microprofile.rest.client</groupId>
@@ -47,6 +49,19 @@
     </dependency>
 
     <!-- TCK Support  -->
+
+    <dependency>
+      <groupId>org.eclipse.microprofile.config</groupId>
+      <artifactId>microprofile-config-api</artifactId>
+      <scope>test</scope>
+    </dependency>
+
+    <dependency>
+      <groupId>org.wildfly</groupId>
+      <artifactId>wildfly-microprofile-config-implementation</artifactId>
+      <scope>test</scope>
+    </dependency>
+
     <dependency>
       <groupId>org.testng</groupId>
       <artifactId>testng</artifactId>

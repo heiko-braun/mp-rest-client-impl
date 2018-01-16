@@ -39,6 +39,8 @@
     <version.arquillian>1.1.13.Final</version.arquillian>
     <version.resteasy>4.0.0-SNAPSHOT</version.resteasy>
     <version.microprofile.restclient>1.0</version.microprofile.restclient>
+    <version.microprofile-config>1.2</version.microprofile-config>
+    <version.wildfly-microprofile-config>1.2.1</version.wildfly-microprofile-config>
   </properties>
 
   <licenses>
@@ -86,6 +88,18 @@
         <artifactId>microprofile-rest-client-tck</artifactId>
         <version>${version.microprofile.restclient}</version>
         <scope>test</scope>
+      </dependency>
+
+      <dependency>
+        <groupId>org.eclipse.microprofile.config</groupId>
+        <artifactId>microprofile-config-api</artifactId>
+        <version>${version.microprofile-config}</version>
+      </dependency>
+
+      <dependency>
+        <groupId>org.wildfly</groupId>
+        <artifactId>wildfly-microprofile-config-implementation</artifactId>
+        <version>${version.wildfly-microprofile-config}</version>
       </dependency>
     </dependencies>
   </dependencyManagement>
