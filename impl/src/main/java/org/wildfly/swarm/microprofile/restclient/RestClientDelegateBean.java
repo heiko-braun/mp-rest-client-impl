@@ -19,28 +19,34 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 
-public class RestClientDelegateBean implements Bean<Object>, PassivationCapable{
+public class RestClientDelegateBean implements Bean<Object>, PassivationCapable {
+
     public static final String REST_URL_FORMAT = "%s/mp-rest/url";
+
     public static final String REST_SCOPE_FORMAT = "%s/mp-rest/scope";
-    private final Class<?> clientInterface;
+
+    private final Class<?> proxyType;
+
     private final Class<? extends Annotation> scope;
+
     private final BeanManager beanManager;
+
     private final Config config;
 
-    RestClientDelegateBean(Class<?> clientInterface, BeanManager beanManager) {
-        this.clientInterface = clientInterface;
+    RestClientDelegateBean(Class<?> proxyType, BeanManager beanManager) {
+        this.proxyType = proxyType;
         this.beanManager = beanManager;
-        this.config = ConfigProvider.getConfig();
-        this.scope = this.readScope();
+        this.config = ConfigProvider.getConfig(); // TODO should this be injected?
+        this.scope = this.resolveScope();
     }
     @Override
     public String getId() {
-        return clientInterface.getName();
+        return proxyType.getName();
     }
 
     @Override
     public Class<?> getBeanClass() {
-        return clientInterface;
+        return proxyType;
     }
 
     @Override
@@ -58,7 +64,7 @@ public class RestClientDelegateBean implements Bean<Object>, PassivationCapable{
         RestEasyClientBuilder builder = new RestEasyClientBuilder();
         String baseUrl = getBaseUrl();
         try {
-            return builder.baseUrl(new URL(baseUrl)).build(clientInterface);
+            return builder.baseUrl(new URL(baseUrl)).build(proxyType);
         } catch (MalformedURLException e) {
             throw new IllegalArgumentException("The value of URL was invalid "+baseUrl);
         }
@@ -71,7 +77,7 @@ public class RestClientDelegateBean implements Bean<Object>, PassivationCapable{
 
     @Override
     public Set<Type> getTypes() {
-        return Collections.singleton(clientInterface);
+        return Collections.singleton(proxyType);
     }
 
     @Override
@@ -86,7 +92,7 @@ public class RestClientDelegateBean implements Bean<Object>, PassivationCapable{
 
     @Override
     public String getName() {
-        return clientInterface.getName();
+        return proxyType.getName();
     }
 
     @Override
@@ -100,24 +106,25 @@ public class RestClientDelegateBean implements Bean<Object>, PassivationCapable{
     }
 
     private String getBaseUrl() {
-        String property = String.format(REST_URL_FORMAT, clientInterface.getName());
+        String property = String.format(REST_URL_FORMAT, proxyType.getName());
         return config.getValue(property, String.class);
     }
 
-    private Class<? extends Annotation> readScope() {
-        // first check to see if the value is set
-        String property = String.format(REST_SCOPE_FORMAT, clientInterface.getName());
+    private Class<? extends Annotation> resolveScope() {
+
+        String property = String.format(REST_SCOPE_FORMAT, proxyType.getName());
         String configuredScope = config.getOptionalValue(property, String.class).orElse(null);
+
         if(configuredScope != null) {
             try {
                 return (Class<? extends Annotation>)Class.forName(configuredScope);
             } catch (Exception e) {
-                throw new IllegalArgumentException("The scope "+configuredScope+" is invalid",e);
+                throw new IllegalArgumentException("Invalid scope: " + configuredScope ,e);
             }
         }
 
         List<Annotation> possibleScopes = new ArrayList<>();
-        Annotation[] annotations = clientInterface.getDeclaredAnnotations();
+        Annotation[] annotations = proxyType.getDeclaredAnnotations();
         for(Annotation annotation : annotations) {
             if(beanManager.isScope(annotation.annotationType())) {
                 possibleScopes.add(annotation);
@@ -130,7 +137,7 @@ public class RestClientDelegateBean implements Bean<Object>, PassivationCapable{
             return possibleScopes.get(0).annotationType();
         }
         else {
-            throw new IllegalArgumentException("The client interface "+clientInterface+" has multiple scopes defined "+possibleScopes);
+            throw new IllegalArgumentException("Ambiguous scope definition on "+ proxyType +": " + possibleScopes);
         }
     }
 }

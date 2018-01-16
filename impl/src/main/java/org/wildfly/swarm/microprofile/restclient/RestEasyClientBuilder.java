@@ -6,9 +6,12 @@ import java.net.URL;
 import java.util.Map;
 
 import javax.ws.rs.core.Configuration;
+import javax.ws.rs.core.MediaType;
 
 import org.eclipse.microprofile.rest.client.RestClientBuilder;
 import org.eclipse.microprofile.rest.client.RestClientDefinitionException;
+import org.eclipse.microprofile.rest.client.annotation.RegisterProvider;
+import org.jboss.resteasy.client.jaxrs.ProxyBuilder;
 import org.jboss.resteasy.client.jaxrs.ResteasyClient;
 import org.jboss.resteasy.client.jaxrs.ResteasyClientBuilder;
 
@@ -33,8 +36,19 @@ class RestEasyClientBuilder implements RestClientBuilder {
 
     @Override
     public <T> T build(Class<T> aClass) throws IllegalStateException, RestClientDefinitionException {
+
+        RegisterProvider[] providers = aClass.getAnnotationsByType(RegisterProvider.class);
+
+        for (RegisterProvider provider : providers) {
+            this.builderDelegate.register(provider.value(), provider.priority());
+        }
+
         ResteasyClient client = this.builderDelegate.build();
-        return client.target(this.baseURI).proxy(aClass);
+        return client
+                .target(this.baseURI)
+                .proxyBuilder(aClass)
+                .defaultConsumes(MediaType.TEXT_PLAIN)
+                .build();
     }
 
     @Override
@@ -99,4 +113,5 @@ class RestEasyClientBuilder implements RestClientBuilder {
     private final ResteasyClientBuilder builderDelegate;
 
     private URI baseURI;
+
 }
