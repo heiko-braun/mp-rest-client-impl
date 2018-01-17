@@ -104,6 +104,13 @@
     </dependency>
 
     <dependency>
+      <groupId>org.jboss.resteasy</groupId>
+      <artifactId>resteasy-json-p-provider</artifactId>
+      <scope>test</scope>
+      <version>${version.resteasy}</version>
+    </dependency>
+
+    <dependency>
       <groupId>org.glassfish</groupId>
       <artifactId>javax.json</artifactId>
       <version>1.0.4</version>
