@@ -135,9 +135,9 @@
           <dependenciesToScan>
             <dependency>org.eclipse.microprofile.rest.client:microprofile-rest-client-tck</dependency>
           </dependenciesToScan>
-          <!--<excludes>
-            <exclude>org.eclipse.microprofile.rest.client.tck.DefaultExceptionMapperTest</exclude>
-          </excludes>-->
+          <excludes>
+            <exclude>org.eclipse.microprofile.rest.client.tck.FeatureRegistrationTest</exclude>
+          </excludes>
         </configuration>
       </plugin>
 
