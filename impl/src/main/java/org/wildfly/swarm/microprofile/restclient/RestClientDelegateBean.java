@@ -92,6 +92,7 @@ public class RestClientDelegateBean implements Bean<Object>, PassivationCapable 
         Set<Annotation> qualifiers = new HashSet<Annotation>();
         qualifiers.add( new AnnotationLiteral<Default>() {} );
         qualifiers.add( new AnnotationLiteral<Any>() {} );
+        qualifiers.add(RestClient.LITERAL);
         return qualifiers;
     }
 
