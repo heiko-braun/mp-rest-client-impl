@@ -152,11 +152,6 @@
           <excludes>
 
             <!--
-              I think the handler with the higher priority should execute toThrowable(), the second one doesn't need to
-              -->
-            <exclude>org.eclipse.microprofile.rest.client.tck.CallMultipleMappersTest</exclude>
-
-            <!--
               the dependency on MP config in the resteasy client is not desireable
               this requires further thought
             -->
