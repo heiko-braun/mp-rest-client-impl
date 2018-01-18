@@ -157,8 +157,6 @@
             -->
             <exclude>org.eclipse.microprofile.rest.client.tck.DefaultExceptionMapperConfigTest</exclude>
 
-            <!-- simply requires work -->
-            <exclude>org.eclipse.microprofile.rest.client.tck.InvalidInterfaceTest</exclude>
           </excludes>
         </configuration>
       </plugin>
