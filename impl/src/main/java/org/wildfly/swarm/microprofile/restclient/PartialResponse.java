@@ -1,12 +1,18 @@
 package org.wildfly.swarm.microprofile.restclient;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.lang.annotation.Annotation;
 import java.net.URI;
 import java.util.Date;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
+import java.util.stream.Collectors;
 
+import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.client.ClientResponseContext;
 import javax.ws.rs.core.EntityTag;
 import javax.ws.rs.core.GenericType;
@@ -52,8 +58,23 @@ public class PartialResponse extends Response {
 
     @Override
     public <T> T readEntity(Class<T> entityType) {
-        throw notSupported();
+
+        if(entityType.isAssignableFrom(String.class))
+            return (T)readStringEntity(responseContext.getEntityStream());
+        else
+            throw notSupported();
     }
+
+    public static String readStringEntity(InputStream input) {
+        try {
+            try (BufferedReader buffer = new BufferedReader(new InputStreamReader(input))) {
+                return buffer.lines().collect(Collectors.joining("\n"));
+            }
+        } catch (IOException e) {
+            throw new WebApplicationException("Failed to read entity", e);
+        }
+    }
+
 
     @Override
     public <T> T readEntity(GenericType<T> entityType) {
