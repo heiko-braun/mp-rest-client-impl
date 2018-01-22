@@ -3,6 +3,7 @@ package org.wildfly.swarm.microprofile.restclient;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
 import java.lang.reflect.Parameter;
+import java.lang.reflect.Proxy;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
@@ -22,7 +23,6 @@ import org.eclipse.microprofile.rest.client.RestClientBuilder;
 import org.eclipse.microprofile.rest.client.RestClientDefinitionException;
 import org.eclipse.microprofile.rest.client.annotation.RegisterProvider;
 import org.eclipse.microprofile.rest.client.ext.ResponseExceptionMapper;
-import org.jboss.resteasy.client.jaxrs.ResteasyClient;
 import org.jboss.resteasy.client.jaxrs.ResteasyClientBuilder;
 import org.jboss.resteasy.specimpl.ResteasyUriBuilder;
 
@@ -76,13 +76,21 @@ class BuilderImpl implements RestClientBuilder {
             register(DefaultResponseExceptionMapper.class);
         }
 
-        ResteasyClient client = this.builderDelegate.build();
-        return client
+        this.builderDelegate.register(new ExceptionMapping(localProviderInstances), 1);
+
+        final T actualClient = this.builderDelegate.build()
                 .target(this.baseURI)
                 .proxyBuilder(aClass)
                 .defaultConsumes(MediaType.TEXT_PLAIN)
                 .defaultProduces(MediaType.TEXT_PLAIN)
                 .build();
+
+        return (T) Proxy.newProxyInstance(
+                aClass.getClassLoader(),
+                new Class[] {aClass},
+                new ProxyInvocationHandler(actualClient)
+        );
+
     }
 
     private <T> void verifyInterface(Class<T> typeDef) {
