@@ -1,4 +1,4 @@
-package org.wildfly.swarm.microprofile.restclient;
+package org.wildfly.swarm.microprofile.restclient.deployment;
 
 
 import org.eclipse.microprofile.rest.client.inject.RegisterRestClient;

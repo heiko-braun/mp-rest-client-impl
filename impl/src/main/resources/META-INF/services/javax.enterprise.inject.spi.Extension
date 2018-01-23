@@ -1,1 +1,1 @@
-org.wildfly.swarm.microprofile.restclient.RestClientExtension
+org.wildfly.swarm.microprofile.restclient.deployment.RestClientExtension

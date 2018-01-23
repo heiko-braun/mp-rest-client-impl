@@ -1,4 +1,4 @@
-package org.wildfly.swarm.microprofile.restclient;
+package org.wildfly.swarm.microprofile.restclient.deployment;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Type;

@@ -1,4 +1,4 @@
-package org.wildfly.swarm.microprofile.restclient;
+package org.wildfly.swarm.microprofile.restclient.deployment;
 
 import java.util.Collection;
 import java.util.Collections;

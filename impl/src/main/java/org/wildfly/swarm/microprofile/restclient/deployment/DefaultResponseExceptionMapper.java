@@ -1,4 +1,4 @@
-package org.wildfly.swarm.microprofile.restclient;
+package org.wildfly.swarm.microprofile.restclient.deployment;
 
 import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.MultivaluedMap;

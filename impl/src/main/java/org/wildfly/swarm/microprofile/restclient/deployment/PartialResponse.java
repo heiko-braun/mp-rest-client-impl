@@ -1,4 +1,4 @@
-package org.wildfly.swarm.microprofile.restclient;
+package org.wildfly.swarm.microprofile.restclient.deployment;
 
 import java.io.BufferedReader;
 import java.io.IOException;
