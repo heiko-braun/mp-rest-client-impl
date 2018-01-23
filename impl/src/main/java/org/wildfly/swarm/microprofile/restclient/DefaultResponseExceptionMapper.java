@@ -14,7 +14,7 @@ class DefaultResponseExceptionMapper implements ResponseExceptionMapper {
 
     @Override
     public Throwable toThrowable(Response response) {
-        return new WebApplicationException("Unkown error, status code " + response.getStatus(), response);
+        return new WebApplicationException("Unknown error, status code " + response.getStatus(), response);
     }
 
     @Override
