@@ -38,7 +38,7 @@
 
     <version.arquillian>1.1.13.Final</version.arquillian>
     <version.resteasy>3.0.19.Final</version.resteasy>
-    <version.microprofile.restclient>1.1-SNAPSHOT</version.microprofile.restclient>
+    <version.microprofile.restclient>1.0</version.microprofile.restclient>
     <version.microprofile-config>1.2</version.microprofile-config>
     <version.wildfly-microprofile-config>1.2.1</version.wildfly-microprofile-config>
   </properties>

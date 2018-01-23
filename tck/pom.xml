@@ -157,6 +157,12 @@
             -->
             <exclude>org.eclipse.microprofile.rest.client.tck.DefaultExceptionMapperConfigTest</exclude>
 
+            <!-- Challenged, see  https://github.com/eclipse/microprofile-rest-client/pull/69 -->
+            <exclude>org.eclipse.microprofile.rest.client.tck.InvokeWithJsonPProviderTest</exclude>
+            <exclude>org.eclipse.microprofile.rest.client.tck.InvokeWithBuiltProvidersTest</exclude>
+            <exclude>org.eclipse.microprofile.rest.client.tck.InvokeWithRegisteredProvidersTest</exclude>
+            <exclude>org.eclipse.microprofile.rest.client.tck.cditests.CDIInvokeWithRegisteredProvidersTest</exclude>
+
           </excludes>
         </configuration>
       </plugin>
